@@ -51,13 +51,15 @@ function ArticleListItem() {
 
 	return (
 		<Card className={classes.root}>
-			<CardHeader
-				avatar={
-					<Avatar aria-label='recipe' className={classes.avatar}></Avatar>
-				}
-				title='Dark side'
-				subheader='September 14, 2016'
-			/>
+			<Link to='/user'>
+				<CardHeader
+					avatar={
+						<Avatar aria-label='recipe' className={classes.avatar}></Avatar>
+					}
+					title='Dark side'
+					subheader='September 14, 2016'
+				/>
+			</Link>
 			<CardMedia
 				className={classes.media}
 				image='/static/images/cards/paella.jpg'

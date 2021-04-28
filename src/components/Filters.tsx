@@ -4,6 +4,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { Fab, Tooltip } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -43,6 +46,13 @@ export default function Filters() {
 					<MenuItem value={20}>По последним обновлениям</MenuItem>
 				</Select>
 			</FormControl>
+			<Link to='/add'>
+				<Tooltip title='Написать статью' aria-label='add'>
+					<Fab color='secondary'>
+						<AddIcon />
+					</Fab>
+				</Tooltip>
+			</Link>
 		</div>
 	);
 }
