@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme: Theme) =>
 		selectEmpty: {
 			marginTop: theme.spacing(2),
 		},
+		root: {
+			textAlign: "center",
+		},
 	})
 );
 
@@ -26,7 +29,7 @@ export default function Filters() {
 	};
 
 	return (
-		<div>
+		<div className={classes.root}>
 			<FormControl variant='outlined' className={classes.formControl}>
 				<InputLabel id='demo-simple-select-outlined-label'>Фильтр</InputLabel>
 				<Select

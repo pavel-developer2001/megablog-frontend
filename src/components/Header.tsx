@@ -8,9 +8,12 @@ import {
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
+import { Link } from "react-router-dom";
+
+import AuthModal from "./AuthModal";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -47,6 +50,10 @@ const useStyles = makeStyles((theme: Theme) =>
 			alignItems: "center",
 			justifyContent: "center",
 		},
+		head: {
+			color: "white",
+			textDecoration: "none",
+		},
 		inputRoot: {
 			color: "inherit",
 		},
@@ -71,7 +78,10 @@ export default function Header() {
 			<AppBar position='static'>
 				<Toolbar>
 					<Typography variant='h6' className={classes.title}>
-						MEGABLOG
+						<Link className={classes.head} to='/'>
+							{" "}
+							MEGABLOG
+						</Link>
 					</Typography>
 					<div className={classes.search}>
 						<div className={classes.searchIcon}>
@@ -86,10 +96,10 @@ export default function Header() {
 							inputProps={{ "aria-label": "search" }}
 						/>
 					</div>
-					<Button color='inherit'>Регистрация</Button>
-					<Button variant='contained' color='secondary'>
-						Войти
-					</Button>
+					<AuthModal />
+					{/* <Button color='inherit' onClick={() => setOpen(!open)}>
+						Регистрация
+					</Button> */}
 				</Toolbar>
 			</AppBar>
 		</div>

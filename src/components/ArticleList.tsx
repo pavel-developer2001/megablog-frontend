@@ -12,11 +12,14 @@ import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
 			maxWidth: 345,
+			margin: "0 auto",
+			marginBottom: "25px",
 		},
 		media: {
 			height: 0,
@@ -62,7 +65,7 @@ function ArticleListItem() {
 			/>
 			<CardContent>
 				<Typography variant='h6' component='h6'>
-					Как стать программистом за 30 секунд?
+					<Link to='/art'>Как стать программистом за 30 секунд?</Link>
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
