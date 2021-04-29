@@ -18,7 +18,14 @@ function App() {
 				<Header />
 				<Switch>
 					<Route exact path='/' component={Home} />
-					<Route exact path='/user' component={Profile} />
+					{/* <Route path='/user/:id' component={Profile} /> */}
+					<Route
+						path='/user/:id'
+						render={({ match }) => {
+							const { id } = match.params;
+							return <Profile userId={id} />;
+						}}
+					/>
 					<Route exact path='/add' component={AddArticle} />
 					<Route exact path='/art' component={Article} />
 					<Route exact path='/register' component={Register} />
