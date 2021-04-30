@@ -7,7 +7,7 @@ import {
 	Redirect,
 } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { fetchUsers } from "./store/actions/userAction";
 
@@ -22,12 +22,19 @@ import "./App.css";
 
 function App() {
 	const dispatch = useDispatch();
-	const [token, setToken] = React.useState<any>("");
+	//@ts-ignore
+	const { token } = useSelector((state) => state.users);
+	const token2 = localStorage.getItem("token");
+	console.log(token);
 	React.useEffect(() => {
 		dispatch(fetchUsers());
 	}, []);
 	React.useEffect(() => {
-		setToken(localStorage.getItem("token"));
+		if (!token || token2 == "") {
+			return "";
+		} else {
+			return token;
+		}
 	}, [token]);
 
 	console.log(token);
