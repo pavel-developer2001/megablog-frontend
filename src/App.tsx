@@ -19,22 +19,19 @@ import AddArticle from "./pages/AddArticle";
 
 import Header from "./components/Header";
 import "./App.css";
+import { setToken } from "./store/reducers";
 
 function App() {
 	const dispatch = useDispatch();
 	//@ts-ignore
 	const { token } = useSelector((state) => state.users);
-	const token2 = localStorage.getItem("token");
+	// const token2 = localStorage.getItem("token");
 	console.log(token);
 	React.useEffect(() => {
 		dispatch(fetchUsers());
 	}, []);
 	React.useEffect(() => {
-		if (!token || token2 == "") {
-			return "";
-		} else {
-			return token;
-		}
+		dispatch(setToken(localStorage.getItem("token")));
 	}, [token]);
 
 	console.log(token);
