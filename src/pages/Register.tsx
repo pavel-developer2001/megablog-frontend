@@ -2,7 +2,7 @@ import { Button, TextField } from "@material-ui/core";
 import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
-import { getToken, setAuthor } from "../store/reducers";
+import { setAuthor } from "../store/reducers";
 import BlogApi from "../apis/BlogApi";
 import { useHistory } from "react-router-dom";
 
@@ -35,7 +35,6 @@ const Register = () => {
 			});
 			localStorage.setItem("user", JSON.stringify(responce.data.data));
 			localStorage.setItem("token", responce.data.token);
-			dispatch(getToken(responce.data.token));
 			dispatch(setAuthor(responce.data.data));
 			history.push(`/user/${responce.data.data.id}`);
 			setUser("");

@@ -51,7 +51,7 @@ function ArticleListItem() {
 
 	return (
 		<Card className={classes.root}>
-			<Link to='/user'>
+			<Link to='/user/10'>
 				<CardHeader
 					avatar={
 						<Avatar aria-label='recipe' className={classes.avatar}></Avatar>
