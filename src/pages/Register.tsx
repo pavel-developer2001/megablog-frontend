@@ -2,7 +2,7 @@ import { Button, TextField } from "@material-ui/core";
 import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
-import { setAuthor, setToken } from "../store/reducers";
+import { setAuthor, setToken } from "../store/reducers/userReducer";
 import BlogApi from "../apis/BlogApi";
 import { useHistory } from "react-router-dom";
 

@@ -14,7 +14,10 @@ import { Visibility, VisibilityOff } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import BlogApi from "../apis/BlogApi";
+import { setAuthor, setToken } from "../store/reducers/userReducer";
+import { useDispatch } from "react-redux";
 
 interface State {
 	amount: string;
@@ -48,23 +51,28 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 const AuthModal = () => {
 	const [open, setOpen] = React.useState<boolean>(false);
-	const classes = useStyles();
-	const [values, setValues] = React.useState<State>({
-		amount: "",
-		password: "",
-		weight: "",
-		weightRange: "",
-		showPassword: false,
-	});
-	const handleChange = (prop: keyof State) => (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
-		setValues({ ...values, [prop]: event.target.value });
+	const [email, setEmail] = React.useState("");
+	const [password, setPassword] = React.useState("");
+
+	const dispatch = useDispatch();
+	const history = useHistory();
+
+	const loginUser = async (e: any) => {
+		e.preventDefault();
+		const responce = await BlogApi.post("/user/login", {
+			email,
+			password,
+		});
+		localStorage.setItem("user", JSON.stringify(responce.data.data));
+		localStorage.setItem("token", responce.data.token);
+		dispatch(setToken(responce.data.token));
+		dispatch(setAuthor(responce.data.data));
+		history.push(`/user/${responce.data.data.id}`);
+		setEmail("");
+		setPassword("");
 	};
 
-	const handleClickShowPassword = () => {
-		setValues({ ...values, showPassword: !values.showPassword });
-	};
+	const classes = useStyles();
 
 	const handleMouseDownPassword = (
 		event: React.MouseEvent<HTMLButtonElement>
@@ -96,30 +104,29 @@ const AuthModal = () => {
 					<div className={classes.paper}>
 						<h2 id='transition-modal-title'>Войти</h2>
 						<form className={classes.form} noValidate autoComplete='off'>
-							<TextField id='outlined-basic' label='Логин' variant='outlined' />
+							<TextField
+								id='outlined-basic'
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								label='Email'
+								variant='outlined'
+							/>
 							<FormControl variant='outlined'>
 								<InputLabel htmlFor='outlined-adornment-password'>
 									Пароль
 								</InputLabel>
 								<OutlinedInput
 									id='outlined-adornment-password'
-									type={values.showPassword ? "text" : "password"}
-									value={values.password}
-									onChange={handleChange("password")}
+									type='password'
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
 									endAdornment={
 										<InputAdornment position='end'>
 											<IconButton
 												aria-label='toggle password visibility'
-												onClick={handleClickShowPassword}
 												onMouseDown={handleMouseDownPassword}
 												edge='end'
-											>
-												{values.showPassword ? (
-													<Visibility />
-												) : (
-													<VisibilityOff />
-												)}
-											</IconButton>
+											></IconButton>
 										</InputAdornment>
 									}
 									labelWidth={70}
@@ -128,7 +135,12 @@ const AuthModal = () => {
 							<Link className={classes.register} to='/register'>
 								<h2 onClick={() => setOpen(false)}>Регистрация</h2>
 							</Link>
-							<Button variant='contained' color='primary'>
+							<Button
+								variant='contained'
+								type='submit'
+								onClick={loginUser}
+								color='primary'
+							>
 								Войти
 							</Button>
 						</form>

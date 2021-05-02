@@ -16,7 +16,7 @@ import { Link, useHistory } from "react-router-dom";
 import AuthModal from "./AuthModal";
 import { Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "../store/reducers";
+import { setToken } from "../store/reducers/userReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({

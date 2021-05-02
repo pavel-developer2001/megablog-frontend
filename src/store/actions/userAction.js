@@ -1,4 +1,4 @@
-import { setUsers } from "../reducers";
+import { setUsers } from "../reducers/userReducer";
 
 export const fetchUsers = () => {
 	return async (dispatch) => {

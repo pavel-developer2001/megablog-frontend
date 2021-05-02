@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchUsers } from "./store/actions/userAction";
+import { fetchPosts } from "./store/actions/postAction";
 
 import Home from "./pages/Home";
 import Article from "./pages/Article";
@@ -19,22 +20,22 @@ import AddArticle from "./pages/AddArticle";
 
 import Header from "./components/Header";
 import "./App.css";
-import { setToken } from "./store/reducers";
+import { setToken } from "./store/reducers/userReducer";
 
 function App() {
 	const dispatch = useDispatch();
 	//@ts-ignore
 	const { token } = useSelector((state) => state.users);
-	// const token2 = localStorage.getItem("token");
-	console.log(token);
+	//@ts-ignore
+
 	React.useEffect(() => {
 		dispatch(fetchUsers());
+		dispatch(fetchPosts());
 	}, []);
 	React.useEffect(() => {
 		dispatch(setToken(localStorage.getItem("token")));
 	}, [token]);
 
-	console.log(token);
 	return (
 		<div className='App'>
 			<Router>
@@ -52,7 +53,14 @@ function App() {
 							/>
 							<Route exact path='/' component={Home} />
 							<Route exact path='/add' component={AddArticle} />
-							<Route exact path='/art' component={Article} />
+							<Route
+								exact
+								path='/posts/:id'
+								render={({ match }) => {
+									const { id } = match.params;
+									return <Article postId={id} />;
+								}}
+							/>
 							<Redirect to='/' />
 						</Switch>
 					</>

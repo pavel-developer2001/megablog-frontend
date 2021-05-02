@@ -2,8 +2,21 @@ import { Avatar, Button, CardHeader, Typography } from "@material-ui/core";
 import React from "react";
 import AddIcon from "@material-ui/icons/Add";
 import { Link } from "react-router-dom";
+import BlogApi from "../apis/BlogApi";
+import { format } from "date-fns";
 
-const Article = () => {
+const Article: React.FC<any> = ({ postId }) => {
+	const [post, setPost] = React.useState<any>([]);
+	//@ts-ignore
+	React.useEffect(async () => {
+		const responce: any = await BlogApi.get(`/posts/${postId}`);
+		setPost(responce);
+	}, []);
+	//@ts-ignore
+
+	// console.log(
+	// 	format(new Date(post?.data?.data?.createdAt), "dd/MM/yyyy kk:mm")
+	// );
 	return (
 		<div>
 			<Link to='/user'>
@@ -17,17 +30,13 @@ const Article = () => {
 			</Button>
 
 			<Typography variant='h4' gutterBottom>
-				Топ 5 забавных аниме ч.1
+				{post?.data?.data?.postTitle}
 			</Typography>
 			<Typography variant='overline' display='block' gutterBottom>
-				4 апреля 2020
+				{post?.data?.data?.createdAt}
 			</Typography>
 			<Typography variant='body1' gutterBottom>
-				В данном топе я постараюсь выделить сериалы, в которых не так много
-				серий, около 12 +-или же которые состоят из нескольких минут. Т.к.
-				существуют и многосерийные смешные аниме, а для них нужно больше времени
-				на просмотр всего сериала. Но если же хотите, напишите в комментарии и я
-				постараюсь сделать вторую/третью часть с длинными сериалами. 5 место
+				{post?.data?.data?.postText}
 			</Typography>
 		</div>
 	);

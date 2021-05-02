@@ -13,6 +13,9 @@ import { red } from "@material-ui/core/colors";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import BlogApi from "../apis/BlogApi";
+import { format } from "date-fns";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -41,10 +44,18 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-function ArticleListItem() {
+const ArticleListItem: React.FC<any> = ({
+	title,
+	likes,
+	postId,
+	date,
+	userId,
+}) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = React.useState(false);
-
+	const responce = BlogApi.get(`/user/${userId}`);
+	//@ts-ignore
+	// console.log(responce);
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
 	};
@@ -57,7 +68,7 @@ function ArticleListItem() {
 						<Avatar aria-label='recipe' className={classes.avatar}></Avatar>
 					}
 					title='Dark side'
-					subheader='September 14, 2016'
+					subheader={format(new Date(date), "dd/MM/yyyy kk:mm")}
 				/>
 			</Link>
 			<CardMedia
@@ -67,7 +78,7 @@ function ArticleListItem() {
 			/>
 			<CardContent>
 				<Typography variant='h6' component='h6'>
-					<Link to='/art'>Как стать программистом за 30 секунд?</Link>
+					<Link to={`/posts/${postId}`}>{title}</Link>
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
@@ -75,7 +86,7 @@ function ArticleListItem() {
 					<FavoriteBorderIcon />
 				</IconButton>
 				<Typography variant='body1' component='strong'>
-					29
+					{likes}
 				</Typography>
 				<IconButton aria-label='add to favorites'>
 					<ChatBubbleOutlineIcon />
@@ -94,14 +105,25 @@ function ArticleListItem() {
 			</CardActions>
 		</Card>
 	);
-}
+};
 
 const ArticleList = () => {
+	//@ts-ignore
+	const { data } = useSelector((state) => state?.posts?.posts);
 	return (
 		<div className='article-list'>
-			<ArticleListItem />
-			<ArticleListItem />
-			<ArticleListItem />
+			{data?.map((info: any) => {
+				return (
+					<ArticleListItem
+						key={info.id}
+						postId={info.id}
+						title={info.postTitle}
+						likes={info.countLike}
+						date={info.createdAt}
+						userId={info.userId}
+					/>
+				);
+			})}
 		</div>
 	);
 };
