@@ -11,12 +11,11 @@ import Typography from "@material-ui/core/Typography";
 
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import AuthModal from "./AuthModal";
-import { Button } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "../store/reducers/userReducer";
+import { useSelector } from "react-redux";
+import UserAvatar from "./UserAvatar";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -75,17 +74,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Header() {
 	const classes = useStyles();
-	const dispatch = useDispatch();
 	//@ts-ignore
 	const { token } = useSelector((state) => state.users);
-	const history = useHistory();
 	React.useEffect(() => {}, [token]);
 
-	const exitUser = () => {
-		history.push("/register");
-		localStorage.removeItem("token");
-		dispatch(setToken(""));
-	};
 	return (
 		<div className={classes.root}>
 			<AppBar position='static'>
@@ -109,13 +101,7 @@ export default function Header() {
 							inputProps={{ "aria-label": "search" }}
 						/>
 					</div>
-					{token ? (
-						<Button variant='contained' onClick={exitUser} color='primary'>
-							Выйти
-						</Button>
-					) : (
-						<AuthModal />
-					)}
+					{token ? <UserAvatar /> : <AuthModal />}
 				</Toolbar>
 			</AppBar>
 		</div>

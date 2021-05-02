@@ -53,7 +53,12 @@ const ArticleListItem: React.FC<any> = ({
 }) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = React.useState(false);
-	const responce = BlogApi.get(`/user/${userId}`);
+	const [user, setUser] = React.useState<any>([]);
+	//@ts-ignore
+	React.useEffect(async () => {
+		const responce = await BlogApi.get(`/user/${userId}`);
+		setUser(responce);
+	}, []);
 	//@ts-ignore
 	// console.log(responce);
 	const handleExpandClick = () => {
@@ -62,12 +67,12 @@ const ArticleListItem: React.FC<any> = ({
 
 	return (
 		<Card className={classes.root}>
-			<Link to='/user/10'>
+			<Link to={`/user/${userId}`}>
 				<CardHeader
 					avatar={
 						<Avatar aria-label='recipe' className={classes.avatar}></Avatar>
 					}
-					title='Dark side'
+					title={user?.data?.data?.user}
 					subheader={format(new Date(date), "dd/MM/yyyy kk:mm")}
 				/>
 			</Link>

@@ -7,23 +7,38 @@ import { format } from "date-fns";
 
 const Article: React.FC<any> = ({ postId }) => {
 	const [post, setPost] = React.useState<any>([]);
+	const [loading, setLoading] = React.useState(true);
+	const [newDate, setNewDate] = React.useState("");
 	//@ts-ignore
 	React.useEffect(async () => {
 		const responce: any = await BlogApi.get(`/posts/${postId}`);
 		setPost(responce);
+		setLoading(false);
 	}, []);
+	const [user, setUser] = React.useState<any>([]);
 	//@ts-ignore
-
-	// console.log(
-	// 	format(new Date(post?.data?.data?.createdAt), "dd/MM/yyyy kk:mm")
-	// );
+	React.useEffect(async () => {
+		const findUser = await post?.data?.data?.userId;
+		const responce = await BlogApi.get(`/user/${findUser}`);
+		const reformat = await post?.data?.data?.createdAt;
+		const newFormat = await format(new Date(reformat), "dd/MM/yyyy kk:mm");
+		setNewDate(newFormat);
+		setUser(responce);
+		setLoading(false);
+	}, [post]);
+	//@ts-ignore
+	console.log(newDate);
 	return (
 		<div>
-			<Link to='/user'>
-				<CardHeader
-					avatar={<Avatar aria-label='recipe'></Avatar>}
-					title='Dark side'
-				/>
+			<Link to={`/user/${post?.data?.data?.userId}`}>
+				{loading ? (
+					<p>loading</p>
+				) : (
+					<CardHeader
+						avatar={<Avatar aria-label='recipe'></Avatar>}
+						title={user.data?.data?.user}
+					/>
+				)}
 			</Link>
 			<Button variant='contained' color='primary' endIcon={<AddIcon />}>
 				Подписаться
@@ -33,7 +48,7 @@ const Article: React.FC<any> = ({ postId }) => {
 				{post?.data?.data?.postTitle}
 			</Typography>
 			<Typography variant='overline' display='block' gutterBottom>
-				{post?.data?.data?.createdAt}
+				{newDate}
 			</Typography>
 			<Typography variant='body1' gutterBottom>
 				{post?.data?.data?.postText}

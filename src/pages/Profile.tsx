@@ -2,19 +2,20 @@ import { Avatar, Button, Typography } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
+import BlogApi from "../apis/BlogApi";
 
-const Profile = ({ userId }) => {
-	// const { author } = useSelector((state) => state.users);
-	// console.log(author);
-	const users = localStorage.getItem("user");
+const Profile: React.FC<any> = ({ userId }) => {
+	const [user, setUser] = React.useState<any>([]);
 	//@ts-ignore
-	// console.log(JSON.parse(users));
-	// console.log(users);
+	React.useEffect(async () => {
+		const responce = await BlogApi.get(`/user/${userId}`);
+		setUser(responce);
+	}, []);
+
 	return (
 		<div>
 			<Avatar src='/broken-image.jpg' />
-			<Typography variant='h5'>{JSON.parse(users).user}</Typography>
-
+			<Typography variant='h5'>{user?.data?.data?.user}</Typography>
 			<Typography variant='button' display='block' gutterBottom>
 				Количество подписчиков: 100
 			</Typography>
