@@ -15,6 +15,7 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import BlogApi from "../apis/BlogApi";
+import imageFon from "../static/image.jpg";
 import { format } from "date-fns";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -40,6 +41,10 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		avatar: {
 			backgroundColor: red[500],
+		},
+		a: { textDecoration: "none" },
+		title: {
+			textAlign: "center",
 		},
 	})
 );
@@ -67,7 +72,7 @@ const ArticleListItem: React.FC<any> = ({
 
 	return (
 		<Card className={classes.root}>
-			<Link to={`/user/${userId}`}>
+			<Link className={classes.a} to={`/user/${userId}`}>
 				<CardHeader
 					avatar={
 						<Avatar aria-label='recipe' className={classes.avatar}></Avatar>
@@ -78,12 +83,14 @@ const ArticleListItem: React.FC<any> = ({
 			</Link>
 			<CardMedia
 				className={classes.media}
-				image='/static/images/cards/paella.jpg'
+				image={imageFon}
 				title='Paella dish'
 			/>
 			<CardContent>
-				<Typography variant='h6' component='h6'>
-					<Link to={`/posts/${postId}`}>{title}</Link>
+				<Typography className={classes.title} variant='h6' component='h6'>
+					<Link className={classes.a} to={`/posts/${postId}`}>
+						{title}
+					</Link>
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>

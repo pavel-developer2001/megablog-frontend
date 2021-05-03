@@ -35,9 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
 			"&:hover": {
 				backgroundColor: fade(theme.palette.common.white, 0.25),
 			},
-			marginRight: theme.spacing(2),
-			marginLeft: 0,
+			// marginRight: theme.spacing(2),
+			// marginLeft: 0,
 			width: "100%",
+			marginRight: "40%",
+			marginLeft: "10px",
 			[theme.breakpoints.up("sm")]: {
 				marginLeft: theme.spacing(3),
 				width: "auto",
@@ -58,6 +60,13 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		inputRoot: {
 			color: "inherit",
+		},
+		fon: {
+			backgroundColor: "red",
+			color: "black",
+			borderRadius: "4px",
+			padding: "4px",
+			marginRight: "3px",
 		},
 		inputInput: {
 			padding: theme.spacing(1, 1, 1, 0),
@@ -85,7 +94,7 @@ export default function Header() {
 					<Typography variant='h6' className={classes.title}>
 						<Link className={classes.head} to='/'>
 							{" "}
-							MEGABLOG
+							<strong className={classes.fon}>MEGA</strong>BLOG
 						</Link>
 					</Typography>
 					<div className={classes.search}>
