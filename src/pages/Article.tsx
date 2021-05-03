@@ -27,7 +27,6 @@ const Article: React.FC<any> = ({ postId }) => {
 		setLoading(false);
 	}, [post]);
 	//@ts-ignore
-	console.log(newDate);
 	return (
 		<div>
 			<Link to={`/user/${post?.data?.data?.userId}`}>
