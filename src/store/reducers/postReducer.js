@@ -12,10 +12,8 @@ export default function usersReducer(state = initialState, action) {
 				posts: action.payload,
 			};
 		case ADD_POST:
-			return console.log({
-				...state,
-				posts: [...state.posts, action.payload],
-			});
+			return { posts: [action.payload, ...state.posts] };
+
 		default:
 			return state;
 	}
