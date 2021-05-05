@@ -1,20 +1,7 @@
-import {
-	Avatar,
-	Button,
-	CardHeader,
-	Grid,
-	IconButton,
-	Typography,
-} from "@material-ui/core";
+import { Avatar, CardHeader, Typography } from "@material-ui/core";
 import React from "react";
-import CheckIcon from "@material-ui/icons/Check";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-//@ts-ignore
-import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import DeleteIcon from "@material-ui/icons/Delete";
-import CreateIcon from "@material-ui/icons/Create";
+
+import SettingsArticle from "../components/SettingsArticle";
 import { Link } from "react-router-dom";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import BlogApi from "../apis/BlogApi";
@@ -43,7 +30,6 @@ const Article: React.FC<any> = ({ postId }) => {
 	const [post, setPost] = React.useState<any>([]);
 	const [loading, setLoading] = React.useState(true);
 	const [newDate, setNewDate] = React.useState("");
-	const [editing, setEditing] = React.useState(false);
 	const classes = useStyles();
 	//@ts-ignore
 	React.useEffect(async () => {
@@ -77,56 +63,9 @@ const Article: React.FC<any> = ({ postId }) => {
 				)}
 			</Link>
 
-			<PopupState variant='popover' popupId='demo-popup-menu'>
-				{(popupState: any) => (
-					<React.Fragment>
-						<IconButton
-							// onClick={() => setOff(!off)}
-							{...bindTrigger(popupState)}
-							aria-label='delete'
-						>
-							<MoreVertIcon />
-						</IconButton>
-						<Menu {...bindMenu(popupState)}>
-							<MenuItem onClick={popupState.close}>
-								{" "}
-								{!editing && (
-									<Button
-										variant='contained'
-										color='default'
-										onClick={() => setEditing(!editing)}
-										startIcon={<CreateIcon />}
-									>
-										Редактировать
-									</Button>
-								)}
-								{editing && (
-									<Button
-										variant='contained'
-										color='default'
-										// onClick={handleEdit}
-										startIcon={<CheckIcon />}
-									>
-										Готово
-									</Button>
-								)}
-							</MenuItem>
-							<MenuItem onClick={popupState.close}>
-								<Button
-									variant='contained'
-									color='secondary'
-									// onClick={removeTodo}
-									startIcon={<DeleteIcon />}
-								>
-									Удалить
-								</Button>
-							</MenuItem>
-						</Menu>
-					</React.Fragment>
-				)}
-			</PopupState>
+			<SettingsArticle />
+
 			<div className={classes.block}></div>
-			{/* )} */}
 			{/* <Button variant='contained' color='primary' endIcon={<AddIcon />}>
 				Подписаться
 			</Button> */}
