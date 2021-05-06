@@ -1,4 +1,4 @@
-import { Avatar, CardHeader, Typography } from "@material-ui/core";
+import { Avatar, Button, CardHeader, Typography } from "@material-ui/core";
 import React from "react";
 
 import SettingsArticle from "../components/SettingsArticle";
@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		block: {
 			display: "block",
+		},
+		input: {
+			display: "none",
 		},
 	})
 );
@@ -49,6 +52,15 @@ const Article: React.FC<any> = ({ postId }) => {
 		setLoading(false);
 	}, [post]);
 	//@ts-ignore
+	const [ttt, setTTT] = React.useState<any>(null);
+	const handleChange = (e: any) => {
+		const imageUrl = URL.createObjectURL(e.target.files[0]);
+		setTTT(imageUrl);
+	};
+	const func = () => {
+		const formData = new FormData();
+		formData.append("image", ttt);
+	};
 	return (
 		<div className={classes.root}>
 			<Link className={classes.a} to={`/user/${post?.data?.data?.userId}`}>
@@ -79,6 +91,25 @@ const Article: React.FC<any> = ({ postId }) => {
 			<Typography variant='body1' gutterBottom>
 				{post?.data?.data?.postText}
 			</Typography>
+			<input
+				accept='image/*'
+				onChange={handleChange}
+				className={classes.input}
+				id='contained-button-file'
+				multiple
+				type='file'
+			/>
+			<label htmlFor='contained-button-file'>
+				<Button
+					variant='contained'
+					onClick={func}
+					color='primary'
+					component='span'
+				>
+					Upload
+				</Button>
+			</label>
+			{ttt && <img src={ttt} />}
 		</div>
 	);
 };
