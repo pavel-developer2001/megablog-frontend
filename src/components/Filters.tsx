@@ -39,7 +39,7 @@ export default function Filters() {
 
 	return (
 		<div className={classes.root}>
-			<FormControl variant='outlined' className={classes.formControl}>
+			{/* <FormControl variant='outlined' className={classes.formControl}>
 				<InputLabel id='demo-simple-select-outlined-label'>Фильтр</InputLabel>
 				<Select
 					labelId='demo-simple-select-outlined-label'
@@ -51,7 +51,7 @@ export default function Filters() {
 					<MenuItem value={10}>По популярности</MenuItem>
 					<MenuItem value={20}>По последним обновлениям</MenuItem>
 				</Select>
-			</FormControl>
+			</FormControl> */}
 			<Link to='/add' className={classes.a}>
 				<Button
 					variant='contained'

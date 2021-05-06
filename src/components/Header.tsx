@@ -97,7 +97,7 @@ export default function Header() {
 							<strong className={classes.fon}>MEGA</strong>BLOG
 						</Link>
 					</Typography>
-					<div className={classes.search}>
+					{/* <div className={classes.search}>
 						<div className={classes.searchIcon}>
 							<SearchIcon />
 						</div>
@@ -109,7 +109,7 @@ export default function Header() {
 							}}
 							inputProps={{ "aria-label": "search" }}
 						/>
-					</div>
+					</div> */}
 					{token ? <UserAvatar /> : <AuthModal />}
 				</Toolbar>
 			</AppBar>

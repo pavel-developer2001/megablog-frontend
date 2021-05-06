@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme: Theme) =>
 		title: {
 			textAlign: "center",
 		},
+		list: {
+			marginTop: "45px",
+		},
 	})
 );
 
@@ -122,8 +125,9 @@ const ArticleListItem: React.FC<any> = ({
 const ArticleList = () => {
 	//@ts-ignore
 	const { data } = useSelector((state) => state?.posts?.posts);
+	const classes = useStyles();
 	return (
-		<div className='article-list'>
+		<div className={classes.list}>
 			{data?.map((info: any) => {
 				return (
 					<ArticleListItem
