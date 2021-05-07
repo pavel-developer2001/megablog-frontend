@@ -12,7 +12,10 @@ export default function usersReducer(state = initialState, action) {
 				posts: action.payload,
 			};
 		case ADD_POST:
-			return { posts: [action.payload, ...state.posts] };
+			return {
+				...state,
+				posts: [...state.posts.data, action.payload],
+			};
 
 		default:
 			return state;

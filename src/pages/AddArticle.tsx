@@ -43,7 +43,7 @@ const AddArticle = () => {
 				userId,
 			});
 
-			// dispatch(addPost(responce.data.data));
+			dispatch(addPost(responce.data.data));
 			history.push(`/posts/${responce.data.data.id}`);
 			setPostTitle("");
 			setPostText("");

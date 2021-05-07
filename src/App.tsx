@@ -27,9 +27,12 @@ function App() {
 	//@ts-ignore
 	const { token } = useSelector((state) => state.users);
 	//@ts-ignore
+	const { posts } = useSelector((state) => state.posts);
 
 	React.useEffect(() => {
 		dispatch(fetchUsers());
+	}, []);
+	React.useEffect(() => {
 		dispatch(fetchPosts());
 	}, []);
 	React.useEffect(() => {

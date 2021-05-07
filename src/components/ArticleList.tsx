@@ -103,7 +103,7 @@ const ArticleListItem: React.FC<any> = ({
 				<Typography variant='body1' component='strong'>
 					{likes}
 				</Typography>
-				<IconButton aria-label='add to favorites'>
+				{/* <IconButton aria-label='add to favorites'>
 					<ChatBubbleOutlineIcon />
 				</IconButton>
 				<Typography variant='body1' component='strong'>
@@ -116,7 +116,7 @@ const ArticleListItem: React.FC<any> = ({
 					onClick={handleExpandClick}
 					aria-expanded={expanded}
 					aria-label='show more'
-				></IconButton>
+				></IconButton> */}
 			</CardActions>
 		</Card>
 	);

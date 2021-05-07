@@ -52,15 +52,15 @@ const Article: React.FC<any> = ({ postId }) => {
 		setLoading(false);
 	}, [post]);
 	//@ts-ignore
-	const [ttt, setTTT] = React.useState<any>(null);
-	const handleChange = (e: any) => {
-		const imageUrl = URL.createObjectURL(e.target.files[0]);
-		setTTT(imageUrl);
-	};
-	const func = () => {
-		const formData = new FormData();
-		formData.append("image", ttt);
-	};
+	// const [ttt, setTTT] = React.useState<any>(null);
+	// const handleChange = (e: any) => {
+	// 	const imageUrl = URL.createObjectURL(e.target.files[0]);
+	// 	setTTT(imageUrl);
+	// };
+	// const func = () => {
+	// 	const formData = new FormData();
+	// 	formData.append("image", ttt);
+	// };
 	return (
 		<div className={classes.root}>
 			<Link className={classes.a} to={`/user/${post?.data?.data?.userId}`}>
@@ -75,7 +75,7 @@ const Article: React.FC<any> = ({ postId }) => {
 				)}
 			</Link>
 
-			<SettingsArticle />
+			{/* <SettingsArticle /> */}
 
 			<div className={classes.block}></div>
 			{/* <Button variant='contained' color='primary' endIcon={<AddIcon />}>
@@ -91,7 +91,7 @@ const Article: React.FC<any> = ({ postId }) => {
 			<Typography variant='body1' gutterBottom>
 				{post?.data?.data?.postText}
 			</Typography>
-			<input
+			{/* <input
 				accept='image/*'
 				onChange={handleChange}
 				className={classes.input}
@@ -109,7 +109,7 @@ const Article: React.FC<any> = ({ postId }) => {
 					Upload
 				</Button>
 			</label>
-			{ttt && <img src={ttt} />}
+			{ttt && <img src={ttt} />} */}
 		</div>
 	);
 };
