@@ -26,8 +26,10 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 	})
 );
-
-const Profile: React.FC<any> = ({ userId }) => {
+type ProfileProps = {
+	userId: string;
+};
+const Profile: React.FC<ProfileProps> = ({ userId }) => {
 	const [user, setUser] = React.useState<any>([]);
 	const classes = useStyles();
 	//@ts-ignore

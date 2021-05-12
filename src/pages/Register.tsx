@@ -24,7 +24,7 @@ const Register = () => {
 	const [email, setEmail] = React.useState("");
 	const [password, setPassword] = React.useState("");
 	const [password2, setPassword2] = React.useState("");
-	const registerUser = async (e: any) => {
+	const registerUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		try {
 			const responce = await BlogApi.post("/user/register", {

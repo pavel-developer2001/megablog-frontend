@@ -34,7 +34,7 @@ const AddArticle = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	const addNewPost = async (e: any) => {
+	const addNewPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		try {
 			const responce = await BlogApi.post("/posts/addPost", {

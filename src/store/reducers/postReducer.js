@@ -3,6 +3,7 @@ const ADD_POST = "ADD_POST";
 
 const initialState = {
 	posts: [],
+	loading: true,
 };
 export default function usersReducer(state = initialState, action) {
 	switch (action.type) {
@@ -10,6 +11,7 @@ export default function usersReducer(state = initialState, action) {
 			return {
 				...state,
 				posts: action.payload,
+				loading: false,
 			};
 		case ADD_POST:
 			return {

@@ -29,7 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 	})
 );
-const Article: React.FC<any> = ({ postId }) => {
+type ArticleProps = {
+	postId: string;
+};
+const Article: React.FC<ArticleProps> = ({ postId }) => {
 	const [post, setPost] = React.useState<any>([]);
 	const [loading, setLoading] = React.useState(true);
 	const [newDate, setNewDate] = React.useState("");

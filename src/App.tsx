@@ -7,7 +7,7 @@ import {
 	Redirect,
 } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { fetchUsers } from "./store/actions/userAction";
 import { fetchPosts } from "./store/actions/postAction";
@@ -21,14 +21,14 @@ import AddArticle from "./pages/AddArticle";
 import Header from "./components/Header";
 import "./App.css";
 import { setToken } from "./store/reducers/userReducer";
+import { useTypedSelector } from "./hooks/useTypedSelector";
 
 function App() {
 	const dispatch = useDispatch();
-	//@ts-ignore
-	const { token } = useSelector((state) => state.users);
-	//@ts-ignore
-	const { posts } = useSelector((state) => state.posts);
-	React.useEffect(() => {}, [posts]);
+
+	const { token } = useTypedSelector((state) => state.users);
+
+	const { posts } = useTypedSelector((state) => state.posts);
 	React.useEffect(() => {
 		dispatch(fetchUsers());
 	}, []);

@@ -13,10 +13,11 @@ import { red } from "@material-ui/core/colors";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+
 import BlogApi from "../apis/BlogApi";
 import imageFon from "../static/image.jpg";
 import { format } from "date-fns";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -51,8 +52,14 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 	})
 );
-
-const ArticleListItem: React.FC<any> = ({
+type ArticleListItemProps = {
+	title: string;
+	likes: number;
+	postId: number;
+	date: number;
+	userId: number;
+};
+const ArticleListItem: React.FC<ArticleListItemProps> = ({
 	title,
 	likes,
 	postId,
@@ -123,23 +130,30 @@ const ArticleListItem: React.FC<any> = ({
 };
 
 const ArticleList = () => {
-	//@ts-ignore
-	const { data } = useSelector((state) => state?.posts?.posts);
+	const { data } = useTypedSelector((state) => state.posts.posts);
+
+	const { loading } = useTypedSelector((state) => state.posts);
 	const classes = useStyles();
 	return (
 		<div className={classes.list}>
-			{data?.map((info: any) => {
-				return (
-					<ArticleListItem
-						key={info.id}
-						postId={info.id}
-						title={info.postTitle}
-						likes={info.countLike}
-						date={info.createdAt}
-						userId={info.userId}
-					/>
-				);
-			})}
+			{loading ? (
+				<p>loading</p>
+			) : data ? (
+				data.map((info: any) => {
+					return (
+						<ArticleListItem
+							key={info.id}
+							postId={info.id}
+							title={info.postTitle}
+							likes={info.countLike}
+							date={info.createdAt}
+							userId={info.userId}
+						/>
+					);
+				})
+			) : (
+				<p>Нет постов</p>
+			)}
 		</div>
 	);
 };

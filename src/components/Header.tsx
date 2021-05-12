@@ -14,8 +14,9 @@ import SearchIcon from "@material-ui/icons/Search";
 import { Link } from "react-router-dom";
 
 import AuthModal from "./AuthModal";
-import { useSelector } from "react-redux";
+
 import UserAvatar from "./UserAvatar";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -83,8 +84,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Header() {
 	const classes = useStyles();
-	//@ts-ignore
-	const { token } = useSelector((state) => state.users);
+
+	const { token } = useTypedSelector((state) => state.users);
 	React.useEffect(() => {}, [token]);
 
 	return (
