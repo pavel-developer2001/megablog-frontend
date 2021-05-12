@@ -28,10 +28,17 @@ function App() {
 	const { token } = useSelector((state) => state.users);
 	//@ts-ignore
 	const { posts } = useSelector((state) => state.posts);
-
+	React.useEffect(() => {}, [posts]);
 	React.useEffect(() => {
 		dispatch(fetchUsers());
 	}, []);
+	// const ttt = React.useCallback(() => {
+	// 	dispatch(fetchPosts());
+	// }, [posts]);
+	// React.useEffect(() => {
+	// 	ttt();
+	// }, [ttt]);
+	console.log(posts);
 	React.useEffect(() => {
 		dispatch(fetchPosts());
 	}, []);
