@@ -10,7 +10,6 @@ import {
 import { useDispatch } from "react-redux";
 
 import { fetchUsers } from "./store/actions/userAction";
-import { fetchPosts } from "./store/actions/postAction";
 
 import Home from "./pages/Home";
 import Article from "./pages/Article";
@@ -28,20 +27,10 @@ function App() {
 
 	const { token } = useTypedSelector((state) => state.users);
 
-	const { posts } = useTypedSelector((state) => state.posts);
 	React.useEffect(() => {
 		dispatch(fetchUsers());
 	}, []);
-	// const ttt = React.useCallback(() => {
-	// 	dispatch(fetchPosts());
-	// }, [posts]);
-	// React.useEffect(() => {
-	// 	ttt();
-	// }, [ttt]);
-	console.log(posts);
-	React.useEffect(() => {
-		dispatch(fetchPosts());
-	}, []);
+
 	React.useEffect(() => {
 		dispatch(setToken(localStorage.getItem("token")));
 	}, [token]);

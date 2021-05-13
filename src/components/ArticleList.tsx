@@ -18,6 +18,8 @@ import BlogApi from "../apis/BlogApi";
 import imageFon from "../static/image.jpg";
 import { format } from "date-fns";
 import { useTypedSelector } from "../hooks/useTypedSelector";
+import { fetchPosts } from "../store/actions/postAction";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -131,7 +133,11 @@ const ArticleListItem: React.FC<ArticleListItemProps> = ({
 
 const ArticleList = () => {
 	const { data } = useTypedSelector((state) => state.posts.posts);
-
+	const dispatch = useDispatch();
+	React.useEffect(() => {
+		dispatch(fetchPosts());
+	}, []);
+	console.log(data);
 	const { loading } = useTypedSelector((state) => state.posts);
 	const classes = useStyles();
 	return (
