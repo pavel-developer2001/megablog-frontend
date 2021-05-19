@@ -32,6 +32,7 @@ function App() {
 	}, []);
 
 	React.useEffect(() => {
+		//@ts-ignore
 		dispatch(setToken(localStorage.getItem("token")));
 	}, [token]);
 

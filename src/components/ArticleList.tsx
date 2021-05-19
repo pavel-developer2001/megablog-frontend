@@ -132,6 +132,7 @@ const ArticleListItem: React.FC<ArticleListItemProps> = ({
 };
 
 const ArticleList = () => {
+	//@ts-ignore
 	const { data } = useTypedSelector((state) => state.posts.posts);
 	const dispatch = useDispatch();
 	React.useEffect(() => {
