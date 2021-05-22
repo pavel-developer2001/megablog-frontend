@@ -138,7 +138,6 @@ const ArticleList = () => {
 	React.useEffect(() => {
 		dispatch(fetchPosts());
 	}, []);
-	console.log(data);
 	const { loading } = useTypedSelector((state) => state.posts);
 	const classes = useStyles();
 	return (

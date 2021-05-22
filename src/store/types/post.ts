@@ -1,5 +1,16 @@
+type IData = {
+	countLike: number;
+	createdAt: string;
+	id: number;
+	postText: string;
+	postTitle: string;
+	updatedAt: string;
+	userId: number;
+};
+type data<IData> = [];
 export type PostState = {
-	posts: any[];
+	//@ts-ignore
+	posts: data;
 	loading: boolean;
 };
 export enum PostActionTypes {

@@ -1,10 +1,11 @@
 import { PostAction, PostActionTypes, PostState } from "../types/post";
+
 const initialState: PostState = {
 	posts: [],
 	loading: true,
 };
 
-export default function usersReducer(state = initialState, action: PostAction) {
+export default function postsReducer(state = initialState, action: PostAction) {
 	switch (action.type) {
 		case PostActionTypes.SET_POSTS:
 			return {
@@ -15,7 +16,6 @@ export default function usersReducer(state = initialState, action: PostAction) {
 		case PostActionTypes.ADD_POST:
 			return {
 				...state,
-				//@ts-ignore
 				posts: [...state.posts.data, action.payload],
 			};
 
