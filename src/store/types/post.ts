@@ -7,10 +7,10 @@ type IData = {
 	updatedAt: string;
 	userId: number;
 };
-type data<IData> = [];
 export type PostState = {
-	//@ts-ignore
-	posts: data;
+	posts: {
+		data: IData[];
+	};
 	loading: boolean;
 };
 export enum PostActionTypes {

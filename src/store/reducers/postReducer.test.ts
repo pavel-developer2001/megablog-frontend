@@ -27,5 +27,6 @@ it("added new post", () => {
 	let action = addPost(data);
 
 	let newState = postReducer(initialState, action);
+	//@ts-ignore
 	expect(newState.posts.length).toBe(1);
 });
