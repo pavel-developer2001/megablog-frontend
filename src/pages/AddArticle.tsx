@@ -1,11 +1,10 @@
 import { Button, TextField } from "@material-ui/core";
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import BlogApi from "../apis/BlogApi";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addPost } from "../store/reducers/postReducer";
 import Grid from "@material-ui/core/Grid";
+import { addFetchPost } from "../store/actions/postAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,14 +36,14 @@ const AddArticle = () => {
   const addNewPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const responce = await BlogApi.post("/posts/addPost", {
+      const payload = {
         postTitle,
         postText,
         userId,
-      });
+      };
+      dispatch(addFetchPost(payload));
+      history.push("/");
 
-      dispatch(addPost(responce.data.data));
-      history.push(`/posts/${responce.data.data.id}`);
       setPostTitle("");
       setPostText("");
     } catch (e) {
