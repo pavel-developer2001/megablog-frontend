@@ -14,9 +14,9 @@ import Button from "@material-ui/core/Button";
 
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Link, useHistory } from "react-router-dom";
-import BlogApi from "../apis/BlogApi";
-import { setAuthor, setToken } from "../store/reducers/userReducer";
+
 import { useDispatch } from "react-redux";
+import { loginFetchUser } from "../store/actions/userAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,15 +51,12 @@ const AuthModal = () => {
 
   const loginUser = async (e: any) => {
     e.preventDefault();
-    const responce = await BlogApi.post("/user/login", {
+    const payload = {
       email,
       password,
-    });
-    localStorage.setItem("user", JSON.stringify(responce.data.data));
-    localStorage.setItem("token", responce.data.token);
-    dispatch(setToken(responce.data.token));
-    dispatch(setAuthor(responce.data.data));
-    history.push(`/user/${responce.data.data.id}`);
+    };
+    dispatch(loginFetchUser(payload));
+    history.push(`/`);
     setEmail("");
     setPassword("");
   };

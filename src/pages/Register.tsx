@@ -2,9 +2,8 @@ import { Button, TextField } from "@material-ui/core";
 import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
-import { setAuthor, setToken } from "../store/reducers/userReducer";
-import BlogApi from "../apis/BlogApi";
 import { useHistory } from "react-router-dom";
+import { registerFetchUser } from "../store/actions/userAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,17 +26,14 @@ const Register = () => {
   const registerUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const responce = await BlogApi.post("/user/register", {
+      const payload = {
         user,
         email,
         password,
         password2,
-      });
-      localStorage.setItem("user", JSON.stringify(responce.data.data));
-      localStorage.setItem("token", responce.data.token);
-      dispatch(setToken(responce.data.token));
-      dispatch(setAuthor(responce.data.data));
-      history.push(`/user/${responce.data.data.id}`);
+      };
+      dispatch(registerFetchUser(payload));
+      history.push(`/`);
       setUser("");
       setEmail("");
       setPassword("");

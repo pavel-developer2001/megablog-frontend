@@ -2,6 +2,7 @@ import { UserAction, UserActionTypes, UserState } from "../types/user";
 const initialState: UserState = {
   users: [],
   author: {},
+  user: [],
   token: "",
 };
 
@@ -11,6 +12,12 @@ export default function usersReducer(state = initialState, action: UserAction) {
       return {
         ...state,
         users: action.payload,
+      };
+    case UserActionTypes.SET_USER:
+      return {
+        ...state,
+        //@ts-ignore
+        user: action.payload.data,
       };
     case UserActionTypes.SET_TOKEN:
       return {
@@ -30,6 +37,10 @@ export default function usersReducer(state = initialState, action: UserAction) {
 
 export const setUsers = (payload: any[]) => ({
   type: UserActionTypes.SET_USERS,
+  payload,
+});
+export const setUser = (payload: any[]) => ({
+  type: UserActionTypes.SET_USER,
   payload,
 });
 export const setAuthor = (payload: any) => ({

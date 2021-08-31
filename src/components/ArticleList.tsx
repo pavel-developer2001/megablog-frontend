@@ -14,12 +14,12 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import { Link } from "react-router-dom";
 
-import BlogApi from "../apis/BlogApi";
 import imageFon from "../static/image.jpg";
 import { format } from "date-fns";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { fetchPosts } from "../store/actions/postAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../store/actions/userAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,58 +61,53 @@ type ArticleListItemProps = {
   date: number;
   userId: number;
 };
-const ArticleListItem: React.FC<ArticleListItemProps> = ({
-  title,
-  likes,
-  postId,
-  date,
-  userId,
-}) => {
-  const classes = useStyles();
-  const [user, setUser] = React.useState<any>([]);
+const ArticleListItem: React.FC<ArticleListItemProps> = React.memo(
+  ({ title, likes, postId, date, userId }) => {
+    const classes = useStyles();
 
-  React.useEffect(() => {
-    async function fetchData() {
-      const responce = await BlogApi.get(`/user/${userId}`);
-      setUser(responce);
-    }
-    fetchData();
-  }, [userId]);
+    //@ts-ignore
+    const user = useSelector((state) => state.users.user);
+    const dispatch = useDispatch();
 
-  return (
-    <Card className={classes.root}>
-      <Link className={classes.a} to={`/user/${userId}`}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label='recipe' className={classes.avatar}></Avatar>
-          }
-          title={user?.data?.data?.user}
-          subheader={format(new Date(date), "dd/MM/yyyy kk:mm")}
+    React.useEffect(() => {
+      dispatch(fetchUser(userId));
+    }, [userId]);
+
+    return (
+      <Card className={classes.root}>
+        <Link className={classes.a} to={`/user/${userId}`}>
+          <CardHeader
+            avatar={
+              <Avatar aria-label='recipe' className={classes.avatar}></Avatar>
+            }
+            title={user.user}
+            subheader={format(new Date(date), "dd/MM/yyyy kk:mm")}
+          />
+        </Link>
+        <CardMedia
+          className={classes.media}
+          image={imageFon}
+          title='Paella dish'
         />
-      </Link>
-      <CardMedia
-        className={classes.media}
-        image={imageFon}
-        title='Paella dish'
-      />
-      <CardContent>
-        <Typography className={classes.title} variant='h6' component='h6'>
-          <Link className={classes.a} to={`/posts/${postId}`}>
-            {title}
-          </Link>
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label='add to favorites'>
-          <FavoriteBorderIcon />
-        </IconButton>
-        <Typography variant='body1' component='strong'>
-          {likes}
-        </Typography>
-      </CardActions>
-    </Card>
-  );
-};
+        <CardContent>
+          <Typography className={classes.title} variant='h6' component='h6'>
+            <Link className={classes.a} to={`/posts/${postId}`}>
+              {title}
+            </Link>
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <IconButton aria-label='add to favorites'>
+            <FavoriteBorderIcon />
+          </IconButton>
+          <Typography variant='body1' component='strong'>
+            {likes}
+          </Typography>
+        </CardActions>
+      </Card>
+    );
+  }
+);
 
 const ArticleList = () => {
   //@ts-ignore

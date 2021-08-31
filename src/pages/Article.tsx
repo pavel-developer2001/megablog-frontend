@@ -3,10 +3,10 @@ import React from "react";
 import { Avatar, CardHeader, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import BlogApi from "../apis/BlogApi";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import { setFetchPost } from "../store/actions/postAction";
+import { fetchUser } from "../store/actions/userAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,16 +48,18 @@ const Article: React.FC<ArticleProps> = ({ postId }) => {
     }
     fetchData();
   }, [postId]);
-  const [user, setUser] = React.useState<any>([]);
+
+  //@ts-ignore
+  const user = useSelector((state) => state.users.user);
 
   React.useEffect(() => {
     async function fetchData() {
-      const findUser = await post[0]?.userId;
-      const responce = await BlogApi.get(`/user/${findUser}`);
+      const userId = await post[0]?.userId;
+
+      await dispatch(fetchUser(userId));
       const reformat = await post[0]?.createdAt;
       const newFormat = await format(new Date(reformat), "dd/MM/yyyy kk:mm");
       setNewDate(newFormat);
-      setUser(responce);
     }
     fetchData();
   }, [post]);
@@ -71,7 +73,7 @@ const Article: React.FC<ArticleProps> = ({ postId }) => {
             <CardHeader
               className={classes.user}
               avatar={<Avatar aria-label='recipe'></Avatar>}
-              title={user.data?.data?.user}
+              title={user.user}
             />
           </Link>
           <div className={classes.block}></div>

@@ -1,7 +1,9 @@
 import { Avatar, Typography } from "@material-ui/core";
 import React from "react";
-import BlogApi from "../apis/BlogApi";
+
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../store/actions/userAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,13 +31,13 @@ type ProfileProps = {
   userId: string;
 };
 const Profile: React.FC<ProfileProps> = ({ userId }) => {
-  const [user, setUser] = React.useState<any>([]);
   const classes = useStyles();
-
+  //@ts-ignore
+  const user = useSelector((state) => state.users.user);
+  const dispatch = useDispatch();
   React.useEffect(() => {
     async function fetchData() {
-      const responce = await BlogApi.get(`/user/${userId}`);
-      setUser(responce);
+      await dispatch(fetchUser(userId));
     }
     fetchData();
   }, [userId]);
@@ -45,7 +47,7 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
       <div className={classes.user}>
         <Avatar src='/broken-image.jpg' className={classes.avatar} />
         <Typography className={classes.name} variant='h5'>
-          {user?.data?.data?.user}
+          {user.user}
         </Typography>
       </div>
     </div>
